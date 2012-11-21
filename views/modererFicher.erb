@@ -1,0 +1,19 @@
+<div class="en-tete">Partie à remplir par le chef technique</div>
+<div class="control-group">
+  <label class="control-label" for="priority">Priorité</label>
+  <select id="priority" name="fiche[priority]">
+    <option value="U">Urgent</option>
+    <option value="T">Trés urgent</option>
+    <option value="P">Prévoir</option>
+  </select>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="executant">Suite donnée par</label>
+  <select id="executant_id" name="fiche[executant_id]">
+    <option value="">Choisir un technicien</option>
+    <% @executants.each do |e| %>
+    <option value="<%=e.id %>" <%="selected" if !@fiche.nil? && @fiche.executant_id == e.id %>><%=e.nom %></option>
+    <% end %>
+  </select>
+</div>

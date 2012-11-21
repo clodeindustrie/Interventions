@@ -1,0 +1,85 @@
+<div class="row" class="retour">
+  <div class="span2">
+    <a href="/" title="Retour a la liste"><i class="icon-arrow-left"></i>Retour</a>
+  </div>
+</div>
+<div class="span4 well">
+  <legend>Demande d'intervention</legend>
+  <% if !@fiche.nil? && @fiche.statut != '' %>
+    Statut: <span class="label <%=@fiche.cssStatus%>"><%=@fiche.statutText%></span>
+  <% end %>
+  <form accept-charset="UTF-8" action="<%=@nextAction%>" method="post">
+    <div class="en-tete">Partie à remplir par le demandeur</div>
+    <div class="control-group">
+      <label class="control-label" for="sujet">Intitulé</label>
+      <input class="span3" name="fiche[sujet]" id="sujet" placeholder="Ex: Plomberie" type="text" value="<%=@fiche.sujet unless @fiche.nil? %>">
+
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="famille">Famille</label>
+      <input class="span3" name="fiche[famille]" id="famille" placeholder="Nom de la famille" type="text" value="<%=@fiche.famille unless @fiche.nil? %>">
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="addresse">Addresse</label>
+      <select id="addresse" name="fiche[addresse_id]">
+	<% @addresses.each do |a| %>
+	<option value="<%=a.id %>"><%=a.addresse %></option>
+	<% end %>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="contenue">Nature de l'intervention demandée</label>
+      <textarea class="span4" id="contenue" name="fiche[contenue]" rows="5">
+	<%=@fiche.contenue unless @fiche.nil? %>
+      </textarea>
+    </div>
+
+    <% if !@fiche.nil? && current_user.role == 'C' %>
+	<div class="en-tete">Partie à remplir par le chef technique</div>
+	<div class="control-group">
+	  <label class="control-label" for="priority">Priorité</label>
+	  <select id="priority" name="fiche[priority]">
+	    <option value="U">Urgent</option>
+	    <option value="T">Trés urgent</option>
+	    <option value="P">Prévoir</option>
+	  </select>
+	</div>
+
+	<div class="control-group">
+	  <label class="control-label" for="executant">Suite donnée par</label>
+	  <select id="executant_id" name="fiche[executant_id]">
+	    <option value="">Choisir un technicien</option>
+	    <% @executants.each do |e| %>
+		<option value="<%=e.id %>" <%="selected" if !@fiche.nil? && @fiche.executant_id == e.id %>><%=e.nom %></option>
+	    <% end %>
+	  </select>
+	</div>
+    <% end %>
+
+    <% if !@fiche.nil? && current_user.role == 'E' %>
+	<div class="en-tete">Partie à remplir par le techicien</div>
+	<div class="control-group">
+	  <label class="control-label" for="observations">Observations</label>
+	  <textarea class="span4" id="observations" name="fiche[observations]" rows="5">
+	    <%=@fiche.observations unless @fiche.nil? %>
+	  </textarea>
+	</div>
+
+	<div class="control-group">
+	  <label class="control-label" for="done_at">Date de réalisation</label>
+	  <input id="done_at" name="fiche[done_at]" class="date-pick" value="<%=@fiche.finie_le if !@fiche.nil?%>"/>
+	</div>
+
+	<div class="control-group">
+	  <label class="control-label" for="travaux">Nature de l'intervention réalisée</label>
+	  <textarea class="span4" id="travaux" name="fiche[travaux]" rows="5">
+	    <%=@fiche.travaux unless @fiche.nil? %>
+	  </textarea>
+	</div>
+    <% end %>
+    <%= newFicheButton current_user.role.nom %>
+  </form>
+</div>

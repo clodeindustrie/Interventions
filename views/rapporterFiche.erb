@@ -1,0 +1,19 @@
+<div class="en-tete">Partie à remplir par le techicien</div>
+<div class="control-group">
+  <label class="control-label" for="observations">Observations</label>
+  <textarea class="span4" id="observations" name="fiche[observations]" rows="5">
+    <%=@fiche.observations unless @fiche.nil? %>
+  </textarea>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="done_at">Date de réalisation</label>
+  <input id="done_at" name="fiche[done_at]" class="date-pick" value="<%=@fiche.finie_le if !@fiche.nil?%>"/>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="travaux">Nature de l'intervention réalisée</label>
+  <textarea class="span4" id="travaux" name="fiche[travaux]" rows="5">
+    <%=@fiche.travaux unless @fiche.nil? %>
+  </textarea>
+</div>

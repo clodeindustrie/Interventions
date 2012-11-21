@@ -1,0 +1,14 @@
+<div class="row" class="retour">
+  <div class="span2">
+    <a href="/addresses" title="Retour a la liste"><i class="icon-arrow-left"></i>Retour</a>
+  </div>
+</div>
+<div class="span3 well">
+  <legend>Addresse</legend>
+  <form accept-charset="UTF-8" action="" method="post">
+    <div class="control-group">
+      <input class="span3" id="addresse" name="add[addresse]" placeholder="Addresse" type="text" value="<%=@addr.addresse unless @addr.nil? %>">
+    </div>
+    <button class="btn btn-info" type="submit"><%= @addr.nil? || @addr.id.nil? ? 'Ajouter' : 'Mettre a jour'%> addresse</button>
+  </form>
+</div>

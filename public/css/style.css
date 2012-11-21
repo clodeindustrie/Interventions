@@ -1,0 +1,13 @@
+.actions {
+    text-align: center;
+}
+
+.retour {
+    margin-bottom: 10px;
+}
+
+.en-tete {
+    border-bottom: 1px dotted black;
+    text-align: right;
+    margin-bottom: 5px;
+}

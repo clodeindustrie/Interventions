@@ -1,0 +1,16 @@
+<div class="row" class="retour">
+  <div class="span2">
+    <a href="/" title="Retour a la liste"><i class="icon-arrow-left"></i>Retour</a>
+  </div>
+</div>
+<div class="span4 well">
+  <legend>Demande d'intervention</legend>
+  <% if !@fiche.nil? && @fiche.statut != '' %>
+    Statut: <span class="label <%=@fiche.cssStatus%>"><%=@fiche.statutText%></span>
+  <% end %>
+  <!-- Afficher informations relevantes pour l'utilisateur et le statut courant -->
+  <form accept-charset="UTF-8" method="post">
+    <!-- Afficher partial -->
+    <%= newFicheButton current_user.role.nom %>
+  </form>
+</div>
