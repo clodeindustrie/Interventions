@@ -1,3 +1,4 @@
+# coding: UTF-8
 #dodgy !!
 unless Kernel.respond_to?(:require_relative)
   module Kernel
@@ -14,8 +15,11 @@ require 'pony'
 require "digest/sha1"
 require 'logger'
 require 'rack-flash'
+require 'sinatra/reloader'
 use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on a11 yr st34ksssss'
 use Rack::Flash
+
+Encoding.default_internal = "UTF-8"
 
 ##
 #trigger: creation de fiche
@@ -38,7 +42,9 @@ use Rack::Flash
 ## CONFIG
 #
 class Intervention < Sinatra::Application
+
   configure :development do
+    register Sinatra::Reloader
     set :raise_errors, true
     set :logging, true
   end
@@ -49,7 +55,6 @@ class Intervention < Sinatra::Application
 
   get '/' do
     login_required
-
     # filtered if agent or executant:
     if current_user.role.nom == 'Agent'
       @fiches = Fiche.filter(:demandeur_id => current_user.id).order(:created_at.desc).all
@@ -59,7 +64,7 @@ class Intervention < Sinatra::Application
       @fiches = Fiche.order(:created_at.desc).all
     end
 
-    @pageTitle = "Les fiches d'intervention'"
+    @pageTitle = "Les fiches d'intervention"
     erb :index, :layout => :layout
   end
 

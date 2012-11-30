@@ -1,8 +1,9 @@
+<%# coding: UTF-8%>
 <div class="row">
   <div class="span5 offset2"><h3>Vos fiches d'intervention</h3></div>
 </div>
 <div class="span5">
-  <table class="table table-striped table-condensed">
+  <table id="index" class="table table-striped table-condensed">
     <thead>
       <tr>
 	<th>Création</th>
@@ -17,22 +18,28 @@
 	<tr><td colspan="4" class="center">Vous n'avez pas encore fait de demande d'intervention</td></tr>
       <% else %>
 	<% @fiches.each do |fiche|%>
-	<tr class="ficheRow">
+	<tr class="ficheRow" data-fiche_id="<%=fiche.id%>">
 	  <td class="center"><%=fiche.debute_le%></td>
 	  <td class="center"><%=fiche.sujet %></td>
 	  <td class="center"><%=fiche.finie_le%></td>
 	  <td class="center">
-	    <span class="label <%=cssStatus(fiche.statut.nom)%>"><%=fiche.statut.nom %></span>
+	    <span class="label label-<%=cssStatus(fiche.statut.nom)%>"><%=fiche.statut.nom %></span>
 	  </td>
-	<td>
-	  <a href="/fiche/<%=fiche.id %>" title="Modifier"><i class="icon-pencil"></i></a>
-	</td>
+	    <td>
+	<% if fiche.to_be_processed_by? current_user %>
+	      <a href="<%= current_user.get_next_action fiche %><%=fiche.id %>" title="Modifier"><i class="icon-pencil"></i></a>
+	<% end %>
+	      <a href="#" title="Voir la fiche"><i class="icon-eye-open"></i></a>
+	    </td>
 	</tr>
 	<% end %>
       <% end %>
     </tbody>
   </table>
   <% if current_user.role.nom == 'Agent' %>
-    <button class="btn btn-info lien" type="button" data-target="/fiche">Faire une demande d'intervention</button>
+    <button class="btn btn-info lien" type="button" data-target="/creer_fiche">Faire une demande d'intervention</button>
   <% end %>
+</div>
+<div class="span5 offset2 hide" id="ficheDetails">
+  sujet: {{sujet}}
 </div>

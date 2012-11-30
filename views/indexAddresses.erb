@@ -15,7 +15,7 @@
 	  <% else %>
 	    <% @adds.each do |add|%>
 	    <tr class="ficheRow">
-	      <td><%=add.addresse %></td>
+	      <td><%=h add.addresse %></td>
 	      <td class="actions">
 		<a href="/addresse/<%=add.id %>" title="Modifier"><i class="icon-pencil"></i></a>
 	      </td>

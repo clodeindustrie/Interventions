@@ -1,19 +1,31 @@
-<div class="en-tete">Partie à remplir par le techicien</div>
-<div class="control-group">
-  <label class="control-label" for="observations">Observations</label>
-  <textarea class="span4" id="observations" name="fiche[observations]" rows="5">
-    <%=@fiche.observations unless @fiche.nil? %>
-  </textarea>
+<div class="row" class="retour">
+  <div class="span2">
+    <a href="/" title="Retour a la liste"><i class="icon-arrow-left"></i>Retour</a>
+  </div>
 </div>
+<div class="span4 well">
+  <legend>Demande d'intervention</legend>
+  <% if !@fiche.nil? && !@fiche.statut.nil?  %>
+  Statut: <span class="label label-<%=cssStatus(@fiche.statut.nom)%>"><%=@fiche.statut.nom %></span>
+  <% end %>
+  <br></br>
+  <p>Intitulé: <%=h @fiche.sujet %></p>
+  <p>Famille: <%=h @fiche.famille %></p>
+  <p>Addresse: <%=h @fiche.addresse.addresse %></p>
+  <p>Nature de l'intervention: <%=h @fiche.contenue %></p>
+  <p>Observations du responsable: <%=h @fiche.observations %></p>
+  <form accept-charset="UTF-8" action="<%=@nextAction%>" method="post">
+    <div class="control-group">
+      <label class="control-label" for="done_at">Date de réalisation</label>
+      <input id="done_at" name="fiche[done_at]" class="date-pick" value="<%=@fiche.finie_le if !@fiche.nil?%>"/>
+    </div>
 
-<div class="control-group">
-  <label class="control-label" for="done_at">Date de réalisation</label>
-  <input id="done_at" name="fiche[done_at]" class="date-pick" value="<%=@fiche.finie_le if !@fiche.nil?%>"/>
-</div>
-
-<div class="control-group">
-  <label class="control-label" for="travaux">Nature de l'intervention réalisée</label>
-  <textarea class="span4" id="travaux" name="fiche[travaux]" rows="5">
-    <%=@fiche.travaux unless @fiche.nil? %>
-  </textarea>
+    <div class="control-group">
+      <label class="control-label" for="travaux">Nature de l'intervention réalisée</label>
+      <textarea class="span4" id="travaux" name="fiche[travaux]" rows="5">
+	<%=h @fiche.travaux unless @fiche.nil? %>
+      </textarea>
+    </div>
+    <%= newFicheButton current_user.role.nom %>
+  </form>
 </div>

@@ -5,34 +5,37 @@
 </div>
 <div class="span4 well">
   <legend>Demande d'intervention</legend>
-  <% if !@fiche.nil? && @fiche.statut != '' %>
-  Statut: <span class="label <%=@fiche.cssStatus%>"><%=@fiche.statutText%></span>
+  <% if !@fiche.nil? && !@fiche.statut.nil?  %>
+  Statut: <span class="label <%=cssStatus(@fiche.statut.nom)%>"><%=@fiche.statut.nom %></span>
+    <% if @fiche.statut.nom == "Rejetée"%>
+	Raison de la rejection:
+	<p><%=@fiche.observations %></p>
+    <% end %>
+    <br></br>
   <% end %>
   <form accept-charset="UTF-8" action="<%=@nextAction%>" method="post">
     <div class="control-group">
       <label class="control-label" for="sujet">Intitulé</label>
-      <input class="span3" name="fiche[sujet]" id="sujet" placeholder="Ex: Plomberie" type="text" value="<%=@fiche.sujet unless @fiche.nil? %>">
+      <input class="span3" name="fiche[sujet]" id="sujet" placeholder="Ex: Plomberie" type="text" value="<%=h @fiche.sujet unless @fiche.nil? %>">
     </div>
 
     <div class="control-group">
       <label class="control-label" for="famille">Famille</label>
-      <input class="span3" name="fiche[famille]" id="famille" placeholder="Nom de la famille" type="text" value="<%=@fiche.famille unless @fiche.nil?  %>">
+      <input class="span3" name="fiche[famille]" id="famille" placeholder="Nom de la famille" type="text" value="<%=h @fiche.famille unless @fiche.nil?  %>">
     </div>
 
     <div class="control-group">
       <label class="control-label" for="addresse">Addresse</label>
       <select id="addresse" name="fiche[addresse_id]">
 	<% @addresses.each do |a| %>
-	<option value="<%=a.id %>"><%=a.addresse %></option>
+	<option value="<%=a.id %>"><%=h a.addresse %></option>
 	<% end %>
       </select>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="contenue">Nature de l'intervention demandée</label>
-      <textarea class="span4" id="contenue" name="fiche[contenue]" rows="5">
-	<%=@fiche.contenue unless @fiche.nil? %>
-      </textarea>
+      <textarea class="span4" id="contenue" name="fiche[contenue]" rows="5"><%=h @fiche.contenue unless @fiche.nil? %></textarea>
     </div>
     <%= newFicheButton current_user.role.nom %>
   </form>

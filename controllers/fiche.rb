@@ -1,116 +1,113 @@
+# -*- coding: utf-8 -*-
 class Intervention < Sinatra::Application
-  # get one
-  get '/fiche/:id' do
-    login_required
-    @fiche = Fiche[params[:id]]
 
-    @executants = Agent.filter(:role => 'E').all
-    @addresses  = Addresse.all
-    @nextAction =  current_user.get_next_action + @fiche.id.to_s
-    @pageTitle = "Intervention numero " + params[:id]
-    erb :newFiche
-  end
-
+  #Display Form for creating a fiche
   get '/creer_fiche' do
     login_required
+    auth_access_for("Agent")
 
-    @executants = Agent.filter(:role_id => Role.filter(:nom => 'Technicien').id).all
     @addresses  = Addresse.all
     @pageTitle  = "Faire une demande d'intervention"
-    @partial    = creerFiche
     erb :creerFiche
   end
 
   # creer une fiche
   post '/creer_fiche' do
     login_required
-    params[:fiche][:demandeur] = current_user
+    auth_access_for("Agent")
+
     @fiche = Fiche.new(params[:fiche])
+    @fiche.demandeur = current_user
     if @fiche.valid?
       @fiche.save
+      flash[:message] = "La demande d'intervention a été envoyée au responsable pour traitment"
       redirect '/'
     else
       @errors = @fiche.errors
-      @executants = Agent.filter(:role => 'E').all
       @addresses  = Addresse.all
-
-      @nextAction = current_user.get_next_action
       @pageTitle  = "Faire une demande d'intervention"
-      erb :newFiche
+      erb :creerFiche
     end
+  end
+
+  #display form for moderer une fiche
+  get '/moderer/:id' do
+    login_required
+    auth_access_for("Responsable")
+    @fiche = Fiche[params[:id]]
+    already_processed?
+
+    @executants = Agent.filter(:role => Role.filter(:nom => 'Technicien')).all
+    @pageTitle  = "Superviser la demande d'intervention"
+    erb :modererFiche
   end
 
   # Moderer une fiche
   post '/moderer/:id' do
     login_required
+    auth_access_for("Responsable")
     @fiche = Fiche[params[:id]]
+    already_processed?
 
     if params.has_key?('autoriser')
-      statut = Statut.
+      statut = Statut.where(:nom => 'Approuvée').first
     elsif params.has_key?('rejeter')
-      statut = Statut[params[:fiche][:statut_id]]
+      statut = Statut.where(:nom => 'Rejetée').first
     end
+    @fiche.statut = statut
 
-    @fiche.set_fields(params[:fiche], [:priority, :executant_id])
-    @fiche.statut < statut
+    @fiche.set_fields(params[:fiche], [:priority, :observations])
+    @fiche.technicien = Agent[params[:fiche][:executant_id]]
 
     if @fiche.valid?
       @fiche.save
-      redirect '/fiche/' + @fiche.id.to_s
+      flash[:message] = "La demande d'intervention a été envoyée au technicien"
+      redirect '/'
     else
+      @fiche.statut = Statut.where(:nom => 'Traitement').first
       @errors = @fiche.errors
-      @executants = Agent.filter(:role => 'E').all
-      @addresses  = Addresse.all
-
-      @nextAction = current_user.get_next_action
-      erb :newFiche
+      @pageTitle  = "Superviser la demande d'intervention"
+      @executants = Agent.filter(:role => Role.where(:nom => 'Technicien')).all
+      erb :modererFiche
     end
+  end
+
+  #display form for rapporter une fiche
+  get '/rapporter/:id' do
+    login_required
+    auth_access_for("Technicien")
+    @fiche = Fiche[params[:id]]
+    already_processed?
+
+    @pageTitle  = "Rapporter l'intervention"
+    erb :rapporterFiche
   end
 
   # update a fiche
   post '/rapporter/:id' do
     login_required
+    auth_access_for("Technicien")
     @fiche = Fiche[params[:id]]
-    params[:fiche][:statut] = "X"
-    @fiche.set_fields(params[:fiche], [:travaux, :observations, :done_at, :statut])
+    already_processed?
+
+    oldStatut = @fiche.statut
+    @fiche.statut = Statut.where(:nom => 'Exécutée').first
+    @fiche.set_fields(params[:fiche], [:travaux, :observations, :done_at])
     if @fiche.valid?
       @fiche.save
-      redirect '/fiche/' + @fiche.id.to_s
+      flash[:message] = "La demande d'intervention a été cloturée"
+      redirect '/'
     else
+      @fiche.statut = oldStatut
       @errors = @fiche.errors
-      @executants = Agent.filter(:role => 'E').all
-      @addresses  = Addresse.all
-
-      @nextAction = current_user.get_next_action
-      erb :newFiche
+      @pageTitle  = "Rapporter l'intervention"
+      erb :rapporterFiche
     end
   end
 
-  # update a fiche
-  post '/fiche/:id' do
+  get '/fiche/:id' do
     login_required
-    @fiche = Fiche[params[:id]]
-    @fiche.set_fields(params[:fiche], [:sujet, :famille, :addresse_id, :contenue, :priority, :executant_id, :travaux, :observations, :done_at])
-    if @fiche.valid?
-      redirect '/fiche/' + @fiche.id.to_s
-    else
-      @errors = @fiche.errors
-      @executants = Agent.filter(:role => 'E').all
-      @addresses  = Addresse.all
-
-      @nextAction = current_user.get_next_action
-      erb :newFiche
-    end
-  end
-
-  # display fiche creation form
-  get '/fiche' do
-    login_required
-
-    @executants = Agent.filter(:role_id => 4).all
-    @addresses  = Addresse.all
-    @nextAction = current_user.get_next_action
-    @pageTitle  = "Faire une demande d'intervention"
-    erb :newFiche
+    fiche = Fiche[params[:id]]
+    fiche.to_hash
   end
 end

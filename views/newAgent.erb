@@ -7,10 +7,10 @@
   <legend>Agent</legend>
   <form accept-charset="UTF-8" action="" method="post">
     <div class="control-group">
-      <input class="span3" id="nom" name="agent[nom]" placeholder="Nom" type="text" value="<%=@agent.nom unless @agent.nil? %>">
+      <input class="span3" id="nom" name="agent[nom]" placeholder="Nom" type="text" value="<%=h @agent.nom unless @agent.nil? %>">
     </div>
     <div class="control-group">
-      <input class="span3" id="email" name="agent[email]" placeholder="Email" type="text" value="<%=@agent.email unless @agent.nil?%>">
+      <input class="span3" id="email" name="agent[email]" placeholder="Email" type="text" value="<%=h @agent.email unless @agent.nil?%>">
     </div>
     <div class="control-group">
       Rôle: <select name="agent[role_id]" id="role">

@@ -18,8 +18,8 @@
       <% @agents.each do |agent|%>
       <tr class="ficheRow">
 	<td><%=agent.nom %></td>
-	<td class="center"><%=agent.email %></td>
-	<td class="center"><%=agent.role.nom %></td>
+	<td class="center"><%=h agent.email %></td>
+	<td class="center"><%=h agent.role.nom %></td>
 	<td>
 	  <a href="/agent/<%=agent.id %>" title="Modifier"><i class="icon-pencil"></i></a>
 	</td>

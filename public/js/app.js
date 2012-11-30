@@ -1,31 +1,46 @@
-// Show/Hide the tool icons on the right of each bookmark
-$("#bookmarks").delegate('li','mouseover mouseout', function(e){
-    if (e.type == 'mouseover') {
-	$(this).children(".tools").show();
-    } else {
-	$(this).children(".tools").hide();
-    }
-});
-// Create a view per button and dynamicly update type and title
 $(function() {
+    // make the buttons behave like links
     $('.lien').click(function(e){
-	window.location = e.target.dataset.target;
+    	window.location = e.target.dataset.target;
     });
 
-      Navigation.init();
+    // Display a fiche infos
+    _.templateSettings = {
+      interpolate : /\{\{(.+?)\}\}/g
+    };
 
-      if ($('#done_at').length != 0) {
+    if ($('#ficheDetails').length !=0 ) {
+	var template = _.template($("#ficheDetails").html());
+    }
+
+    // Make the aler disappear
+    var closeAlert = function(){
+    	if ($('.alert').length != 0) {
+            $('.alert').alert('close');
+    	}
+    };
+    _.delay(closeAlert, 3000);
+
+    // Navigation code
+    Navigation.init();
+
+    //initiate datepicker on the fiche form
+    if ($('#done_at').length != 0) {
 	$("#done_at").datepicker({
-	dateFormat: 'dd/mm/yy'
+	    dateFormat: 'dd/mm/yy'
 	});
-      }
+    }
+
+    // Allow linkage on the fiche table
+    $("tr.ficheRow").delegate('.icon-eye-open', 'click', function(e){
+	$.getJSON('/fiche/' + e.delegateTarget.dataset.fiche_id, function(data){
+	    template(data);
+	});
+    });
 });
 
 (function($arr)
  {
-     /**
-      * Setup class
-      */
      $arr.init = function(errors)
      {
 	 if (errors != {}) {
@@ -40,16 +55,10 @@ $(function() {
 
  })(ErrorDisplay = {});
 
-var Navigation = {};
-
 (function($arr)
  {
-     /**
-      * Setup class
-      */
-     $arr.init = function(errors)
+     $arr.init = function()
      {
 	 $('.navbar li:has(a[href="' + window.location.pathname + '"])').addClass('active');
      };
-
  })(Navigation = {});

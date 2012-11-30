@@ -3,9 +3,9 @@ module ViewStuffs
   def cssStatus(statut)
     case statut
         when 'Traitement' then return 'info'
-        when 'Approuvée' then return 'warning'
-        when 'Rejetée' then return 'important'
-        when 'Exécutée' then return 'success'
+        when 'Approuvée'  then return 'warning'
+        when 'Rejetée'    then return 'important'
+        when 'Exécutée'   then return 'success'
     end
   end
 

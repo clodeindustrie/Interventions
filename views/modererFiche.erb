@@ -1,0 +1,47 @@
+<div class="row" class="retour">
+  <div class="span2">
+    <a href="/" title="Retour a la liste"><i class="icon-arrow-left"></i>Retour</a>
+  </div>
+</div>
+<div class="span4 well">
+  <legend>Demande d'intervention</legend>
+  <% if !@fiche.nil? && !@fiche.statut.nil?  %>
+  Statut: <span class="label label-<%=cssStatus(@fiche.statut.nom)%>"><%=@fiche.statut.nom %></span>
+    <% if @fiche.statut.nom == "Rejetée"%>
+	Raison de la rejection:
+	<p><%=@fiche.observations %></p>
+    <% end %>
+    <br></br>
+  <% end %>
+  <p>Intitulé: <%=h @fiche.sujet %></p>
+  <p>Famille: <%=h @fiche.famille %></p>
+  <p>Addresse: <%=h @fiche.addresse.addresse %></p>
+  <p>Nature de l'intervention: <%=h @fiche.contenue %></p>
+  <form accept-charset="UTF-8" action="<%=@nextAction%>" method="post">
+    <div class="control-group">
+      <label class="control-label" for="priority">Priorité</label>
+      <select id="priority" name="fiche[priority]">
+	<option value="U">Urgent</option>
+	<option value="T">Trés urgent</option>
+	<option value="P">Prévoir</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="executant">Suite donnée par</label>
+      <select id="technicien" name="fiche[executant_id]">
+	<option value="">Choisir un technicien</option>
+	<% @executants.each do |e| %>
+	<option value="<%=e.id %>" <%="selected" if !@fiche.nil? && @fiche.executant_id == e.id %>><%=e.nom %></option>
+	<% end %>
+      </select>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="observations">Observations</label>
+      <textarea class="span4" id="observations" name="fiche[observations]" rows="5"><%=h @fiche.observations unless @fiche.nil? %></textarea>
+    </div>
+    <div id="moderation_buttons">
+    <%= newFicheButton current_user.role.nom %>
+    </div>
+  </form>
+</div>

@@ -11,3 +11,12 @@
     text-align: right;
     margin-bottom: 5px;
 }
+
+#moderation_buttons button{
+    margin-left: 10px;
+}
+
+.alert-feedback {
+    width:300px;
+    margin-left: 100px;
+}

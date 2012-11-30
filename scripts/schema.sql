@@ -1,6 +1,6 @@
-CREATE DATABASE `ficheTechnique`;
+CREATE DATABASE `dev_ficheTechnique`;
 
-use ficheTechnique;
+use dev_ficheTechnique;
 
 CREATE TABLE `roles` (
        `id`    SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -44,10 +44,10 @@ CREATE TABLE `fiches` (
        `famille`  VARCHAR(255) NOT NULL,
        `sujet`  VARCHAR(255) NOT NULL,
        `contenue` VARCHAR(1000) NOT NULL,
-       `travaux` VARCHAR(1000),
        `observations` VARCHAR(1000),
+       `travaux` VARCHAR(1000),
        `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
-       `done_at` TIMESTAMP,
+       `done_at` TIMESTAMP NULL,
        `priority` VARCHAR(1) NOT NULL DEFAULT 'U',
        PRIMARY KEY (`id`),
        FOREIGN KEY (`addresse_id`)

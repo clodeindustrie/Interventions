@@ -32,12 +32,12 @@ class Agent < Sequel::Model
     self.hashed_password = Agent.encrypt(@password, self.salt)
   end
 
-  def get_next_action
+  def get_next_action(fiche)
    case role.nom
     when 'Responsable' then return "/moderer/"
     when 'Technicien' then return "/rapporter/"
     when 'Agent'
-      if @fiche.nil?
+      if fiche.nil?
         return "/creer_fiche"
       else
         return "/fiche/"
