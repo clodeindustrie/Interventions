@@ -17,7 +17,8 @@
   <form accept-charset="UTF-8" action="<%=@nextAction%>" method="post">
     <div class="control-group">
       <label class="control-label" for="done_at">Date de réalisation</label>
-      <input id="done_at" name="fiche[done_at]" class="date-pick" value="<%=@fiche.finie_le if !@fiche.nil?%>"/>
+<div class="input-append"><input type="text" id="" name=""><span class="add-on"><i class="icon-calendar"></i></span></div>
+      <input id="done_at" name="fiche[done_at]" class="date-pick" value="<%=@fiche.finie_le if !@fiche.nil?%>" type="date" placeholder="22/01/1981">
     </div>
 
     <div class="control-group">

@@ -1,3 +1,4 @@
+--  -*- coding: utf-8 -*-
 CREATE DATABASE `dev_ficheTechnique`;
 
 use dev_ficheTechnique;

@@ -18,9 +18,10 @@ class Intervention < Sinatra::Application
 
     @fiche = Fiche.new(params[:fiche])
     @fiche.demandeur = current_user
-    if @fiche.valid?
-      @fiche.save
+
+    if @fiche.valid? && @fiche.save
       flash[:message] = "La demande d'intervention a été envoyée au responsable pour traitment"
+      NotifyAgent.notifyAbout(@fiche)
       redirect '/'
     else
       @errors = @fiche.errors
@@ -54,14 +55,14 @@ class Intervention < Sinatra::Application
     elsif params.has_key?('rejeter')
       statut = Statut.where(:nom => 'Rejetée').first
     end
-    @fiche.statut = statut
 
     @fiche.set_fields(params[:fiche], [:priority, :observations])
     @fiche.technicien = Agent[params[:fiche][:executant_id]]
+    @fiche.statut = statut
 
-    if @fiche.valid?
-      @fiche.save
-      flash[:message] = "La demande d'intervention a été envoyée au technicien"
+    if @fiche.valid? && @fiche.save
+      NotifyAgent.notifyAbout(@fiche)
+      flash[:message] = "La demande d'intervention a été envoyée"
       redirect '/'
     else
       @fiche.statut = Statut.where(:nom => 'Traitement').first
@@ -92,9 +93,10 @@ class Intervention < Sinatra::Application
 
     oldStatut = @fiche.statut
     @fiche.statut = Statut.where(:nom => 'Exécutée').first
-    @fiche.set_fields(params[:fiche], [:travaux, :observations, :done_at])
-    if @fiche.valid?
-      @fiche.save
+    @fiche.set_fields(params[:fiche], [:travaux, :done_at])
+    if @fiche.valid? && @fiche.save
+      NotifyAgent.notifyAbout(@fiche)
+
       flash[:message] = "La demande d'intervention a été cloturée"
       redirect '/'
     else
@@ -108,6 +110,16 @@ class Intervention < Sinatra::Application
   get '/fiche/:id' do
     login_required
     fiche = Fiche[params[:id]]
-    fiche.to_hash
+    @f = fiche.valeurs
+    erb :print, :layout => false
+  end
+
+  get '/print/:id' do
+    login_required
+    @print = true
+    fiche = Fiche[params[:id]]
+    @f = fiche.valeurs
+    @pageTitle  = "Intervention ##{fiche.id}"
+    erb :print, :layout => false
   end
 end

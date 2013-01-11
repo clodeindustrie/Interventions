@@ -3,7 +3,7 @@
     <a href="/" title="Retour a la liste"><i class="icon-arrow-left"></i>Retour</a>
   </div>
 </div>
-<div class="span4 well">
+<div class="span5 well">
   <legend>Demande d'intervention</legend>
   <% if !@fiche.nil? && !@fiche.statut.nil?  %>
   Statut: <span class="label label-<%=cssStatus(@fiche.statut.nom)%>"><%=@fiche.statut.nom %></span>

@@ -1,0 +1,13 @@
+#ficheDetails {
+    display: block;
+    height: 100%;
+    top: 0;
+    box-shadow: none;
+    border: none;
+    margin:0 auto;
+    width: 100%;
+}
+
+#ficheDetails .modal-body {
+    max-height: 1000px;
+}

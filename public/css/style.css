@@ -1,3 +1,11 @@
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+    background: none;
+}
+
+.navbar-inner {
+    background: url(/images/navbar-bg.jpg) repeat-x 0 bottom;
+}
+
 .actions {
     text-align: center;
 }
@@ -19,4 +27,59 @@
 .alert-feedback {
     width:300px;
     margin-left: 100px;
+}
+
+.modal.fade.in{
+    top: 5%;
+}
+
+#ficheDetails {
+    color: #524D4D;
+    width: 400px;
+    max-height: 800px;
+    line-height: 2.5em;
+    margin-top: 10px;
+}
+
+#ficheDetails h3 {
+    display: inline;
+}
+#ficheDetails #statut {
+    float: right;
+    margin-top: 7px;
+    padding: 4px 4px;
+}
+#ficheDetails span {
+    font-size: 1.3em;
+    font-weight: 200;
+}
+#ficheDetails .freeText {
+    padding: 3px;
+    height: 100px;
+    border: 1px solid black;
+    font-weight: bold;
+}
+#ficheDetails .modal-body {
+    max-height: 570px;
+}
+#ficheDetails .modal-body div{
+    padding-bottom: 3px;
+    border-bottom: 1px solid #000000;
+    margin-bottom: 7px;
+}
+#ficheDetails .modal-body div p{
+    color: #000000;
+    font-weight: bold;
+}
+
+#ficheDetails div.textblock {
+    border: none;
+}
+
+.mainspan {
+    padding-bottom: 20px;
+}
+
+#email {
+    width: 17.9em !important;
 }

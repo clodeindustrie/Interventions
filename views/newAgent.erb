@@ -3,14 +3,19 @@
     <a href="/agents" title="Retour a la liste"><i class="icon-arrow-left"></i>Retour</a>
   </div>
 </div>
-<div class="span3 well">
+<div class="span3 well" id="newagent-container">
   <legend>Agent</legend>
   <form accept-charset="UTF-8" action="" method="post">
     <div class="control-group">
       <input class="span3" id="nom" name="agent[nom]" placeholder="Nom" type="text" value="<%=h @agent.nom unless @agent.nil? %>">
     </div>
     <div class="control-group">
-      <input class="span3" id="email" name="agent[email]" placeholder="Email" type="text" value="<%=h @agent.email unless @agent.nil?%>">
+      <div class="input-prepend">
+        <span class="add-on">
+          <i class="icon-envelope"></i>
+        </span>
+        <input type="email" id="email" name="agent[email]" placeholder="Ex: roger@yahoo.com" value="<%=h @agent.email unless @agent.nil?%>">
+      </div>
     </div>
     <div class="control-group">
       Rôle: <select name="agent[role_id]" id="role">

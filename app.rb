@@ -11,15 +11,16 @@ end
 require 'rubygems'
 require 'sinatra'
 require 'json'
-require 'pony'
 require "digest/sha1"
 require 'logger'
 require 'rack-flash'
 require 'sinatra/reloader'
+require 'pony'
 use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on a11 yr st34ksssss'
 use Rack::Flash
 
 Encoding.default_internal = "UTF-8"
+Encoding.default_external = "UTF-8"
 
 ##
 #trigger: creation de fiche
@@ -45,11 +46,25 @@ class Intervention < Sinatra::Application
 
   configure :development do
     register Sinatra::Reloader
+    Pony.options = {
+      :via => :smtp,
+      :via_options => { :host => 'localhost', :port => 1025 },
+      :from      => "intervention@selogerpourvivre.org",
+      :charset   => "UTF-8",
+    }
+    set :current_base_url, "http://0.0.0.0:5000"
     set :raise_errors, true
     set :logging, true
   end
 
   configure :production do
+    Pony.options = {
+      :via => :smtp,
+      :via_options => { :host => 'localhost', :port => 1025 },
+      :from      => "intervention@selogerpourvivre.org",
+      :charset   => "UTF-8",
+    }
+    set :current_base_url, "http://0.0.0.0:5000"
     set :clean_trace, true
   end
 
@@ -77,3 +92,4 @@ end
 require_relative 'models/init'
 require_relative 'controllers/init'
 require_relative 'helpers/init'
+require_relative 'lib/init'

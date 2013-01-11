@@ -50,4 +50,31 @@ class Fiche < Sequel::Model
       false
     end
   end
+
+  def getPriority
+    case priority
+      when "U"
+      return "Urgent"
+      when "T"
+      return "Trés urgent"
+      when "P"
+      return "Prévoir"
+      end
+  end
+
+  def valeurs
+    f = values
+    f[:demandeur]  = demandeur.nom
+    f[:statut]     = statut.nom
+    if !technicien.nil?
+      f[:technicien] = technicien.nom
+    else
+      f[:technicien] = ""
+    end
+    f[:addresse]   = addresse.addresse
+    f[:finie_le]   = finie_le
+    f[:debute_le]  = debute_le
+    f[:priority]   = getPriority
+    f
+  end
 end

@@ -1,5 +1,5 @@
 $(function () {
-    var fragments, closeAlert, action_button;
+    var fragments, closeAlert;
 
     // make the buttons behave like links
     $('.lien').click(function (e) {
@@ -37,17 +37,11 @@ $(function () {
 
     // Allow linkage on the fiche table
     $("tr.ficheRow").delegate('.icon-eye-open', 'click', function (e) {
-        e.preventDefault();
-        var fiche_id = e.delegateTarget.dataset.fiche_id;
-        if ($("#ficheDetails").data("modal") !== undefined) {
-            $("#ficheDetails").data('modal').options.remote = "/fiche/" + fiche_id;
-            $("#ficheDetails").modal('reload');
-
-        } else {
-            $("#ficheDetails").modal({
-                remote: "/fiche/" + fiche_id
-            });
-        }
+        $(e.target).parent("a").preventDefault();
+        var row = e.delegateTarget;
+        $("#ficheDetails").modal({
+            remote: "/fiche/" + row.dataset.fiche_id
+        });
 
         $("#ficheDetails").find("#modal-action").each(function (i, v) {
             $(v).remove();
@@ -55,10 +49,10 @@ $(function () {
 
         if ($(e.delegateTarget).find("a.action").length > 0) {
             $(".modal-footer").append(
-                action_button(fiche_id)
+                action_button(e.delegateTarget.dataset.fiche_id)
             );
         }
-        $('#imprimer').data("fiche_id", fiche_id);
+        $('#imprimer').data("fiche_id", e.delegateTarget.dataset.fiche_id);
     });
 
     // Allow auto opening of the modal

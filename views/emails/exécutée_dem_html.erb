@@ -1,0 +1,36 @@
+<% # coding: utf-8 %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Votre demande d'intervention a été exécutée</title>
+  </head>
+  <body>
+    <img src="<%="#{base_url}/images/banner.jpg" %>" alt="Association Se Loger Pour Vivre" >
+    <div style="padding:20px;">
+        <p>Bonjour <%=to.nom%>,</p>
+        <p>Votre demande d'intervention a été exécutée:</p>
+    </div>
+<div style="margin-left: 10px">
+    <table style="border: 1px solid black;">
+      <thead>
+        <tr>
+          <th>Création</th>
+          <th>Sujet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%=fiche.debute_le%></td>
+          <td>
+            <a href="<%="#{base_url}/##{fiche.id}"%>">
+              <%=fiche.sujet %>
+            </a>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </body>
+</html>
+

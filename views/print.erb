@@ -1,0 +1,51 @@
+<% if @print %>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta author="clodeindustrie">
+    <meta decription="System de gestion des demandes d'interventions">
+    <title><%=@pageTitle %></title>
+    <!-- le html5 shim, for ie6-8 support of html elements -->
+    <!--[if lt ie 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/redmond/jquery-ui-1.7.1.custom.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/print.css">
+  </head>
+  <body>
+    <div id="ficheDetails">
+      <div class="modal-header">
+        <h3>Demande d'intervention</h3>
+      </div>
+      <div class="modal-body">
+<% end %>
+        <span>Statut:</span> <span id="statut" class="label label-<%=cssStatus(@f[:statut])%>"><%=@f[:statut]%></span>
+          <div><span>Intitulé:</span> <p class="pull-right"><%=@f[:sujet]%></p></div>
+          <div><span>Demande faite par:</span> <p class="pull-right"><%=@f[:demandeur]%></p></div>
+          <div><span>Date:</span> <p class="pull-right"><%=@f[:debute_le]%></p></div>
+          <div><span>Famille:</span> <p class="pull-right"><%=@f[:famille]%></p></div>
+          <div><span>Adresse:</span> <p class="pull-right"><%=@f[:addresse]%></p></div>
+          <div><span>Prioritée:</span><p class="pull-right"><%=@f[:priority]%></p></div>
+          <div class="textblock">
+            <span>Nature de l'intervention:</span>
+            <p class="freeText"><%=@f[:contenue]%></p>
+          </div>
+          <div><span>Suite donnée par:</span> <p class="pull-right"><%=@f[:technicien]%></p></div>
+          <div class="textblock">
+            <span>Intervention réalisée:</span>
+            <p class="freeText"><%=@f[:travaux]%></p>
+          </div>
+          <div><span>Date:</span><p class="pull-right"><%=@f[:finie_le]%></p></div>
+<% if @print %>
+      </div>
+    </div>
+    <script>
+    print();
+    window.close();
+    </script>
+  </body>
+</html>
+<% end %>
