@@ -33,12 +33,18 @@
             <span>Nature de l'intervention:</span>
             <p class="freeText"><%=@f[:contenue]%></p>
           </div>
-          <div><span>Suite donnée par:</span> <p class="pull-right"><%=@f[:technicien]%></p></div>
-          <div class="textblock">
-            <span>Intervention réalisée:</span>
-            <p class="freeText"><%=@f[:travaux]%></p>
-          </div>
-          <div><span>Date:</span><p class="pull-right"><%=@f[:finie_le]%></p></div>
+          <% if !@f[:technicien].blank? %>
+            <div><span>Suite donnée par:</span> <p class="pull-right"><%=@f[:technicien]%></p></div>
+          <% end %>
+          <% if @f[:travaux] %>
+            <div class="textblock">
+              <span>Intervention réalisée:</span>
+              <p class="freeText"><%=@f[:travaux]%></p>
+            </div>
+          <% end %>
+          <% if @f[:finie_le] %>
+            <div><span>Date:</span><p class="pull-right"><%=@f[:finie_le]%></p></div>
+          <% end %>
 <% if @print %>
       </div>
     </div>

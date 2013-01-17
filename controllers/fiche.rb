@@ -16,10 +16,11 @@ class Intervention < Sinatra::Application
     login_required
     auth_access_for("Agent")
 
-    @fiche = Fiche.new(params[:fiche])
-    @fiche.demandeur = current_user
+    @fiche = Fiche.new
+    params[:fiche][:demandeur] = current_user
+    @fiche = FicheProcess.setFiche(@fiche, params)
 
-    if @fiche.valid? && @fiche.save
+    if @fiche.errors.empty?
       flash[:message] = "La demande d'intervention a été envoyée au responsable pour traitment"
       NotifyAgent.notifyAbout(@fiche)
       redirect '/'
@@ -50,17 +51,12 @@ class Intervention < Sinatra::Application
     @fiche = Fiche[params[:id]]
     already_processed?
 
-    if params.has_key?('autoriser')
-      statut = Statut.where(:nom => 'Approuvée').first
-    elsif params.has_key?('rejeter')
-      statut = Statut.where(:nom => 'Rejetée').first
-    end
+    params[:fiche][:technicien] = Agent[params[:fiche][:executant_id]]
+    params[:fields] = [:priority, :observations, :technicien]
 
-    @fiche.set_fields(params[:fiche], [:priority, :observations])
-    @fiche.technicien = Agent[params[:fiche][:executant_id]]
-    @fiche.statut = statut
+    @fiche = FicheProcess.setFiche(@fiche, params)
 
-    if @fiche.valid? && @fiche.save
+    if @fiche.errors.empty?
       NotifyAgent.notifyAbout(@fiche)
       flash[:message] = "La demande d'intervention a été envoyée"
       redirect '/'
@@ -91,16 +87,15 @@ class Intervention < Sinatra::Application
     @fiche = Fiche[params[:id]]
     already_processed?
 
-    oldStatut = @fiche.statut
-    @fiche.statut = Statut.where(:nom => 'Exécutée').first
-    @fiche.set_fields(params[:fiche], [:travaux, :done_at])
-    if @fiche.valid? && @fiche.save
+    params[:fields] = [:travaux, :done_at]
+    @fiche = FicheProcess.setFiche(@fiche, params)
+
+    if @fiche.errors.empty?
       NotifyAgent.notifyAbout(@fiche)
 
       flash[:message] = "La demande d'intervention a été cloturée"
       redirect '/'
     else
-      @fiche.statut = oldStatut
       @errors = @fiche.errors
       @pageTitle  = "Rapporter l'intervention"
       erb :rapporterFiche

@@ -48,9 +48,9 @@ class Intervention < Sinatra::Application
     register Sinatra::Reloader
     Pony.options = {
       :via => :smtp,
-      :via_options => { :host => 'localhost', :port => 1025 },
+      :via_options => { :host => '127.0.0.1', :port => '1025' },
       :from      => "intervention@selogerpourvivre.org",
-      :charset   => "UTF-8",
+      :charset   => "UTF-8"
     }
     set :current_base_url, "http://0.0.0.0:5000"
     set :raise_errors, true
@@ -60,9 +60,9 @@ class Intervention < Sinatra::Application
   configure :production do
     Pony.options = {
       :via => :smtp,
-      :via_options => { :host => 'localhost', :port => 1025 },
+      :via_options => { :host => '127.0.0.1', :port => '1025' },
       :from      => "intervention@selogerpourvivre.org",
-      :charset   => "UTF-8",
+      :charset   => "UTF-8"
     }
     set :current_base_url, "http://0.0.0.0:5000"
     set :clean_trace, true

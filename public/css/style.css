@@ -33,6 +33,10 @@
     top: 5%;
 }
 
+.modal-header {
+    Background: url("/images/navbar-bg.jpg") repeat-x scroll 0 bottom transparent;
+}
+
 #ficheDetails {
     color: #524D4D;
     width: 400px;

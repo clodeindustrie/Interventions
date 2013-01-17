@@ -40,31 +40,33 @@ DB.convert_invalid_date_time = :string
 require_relative 'fiche'
 require_relative 'agent'
 require_relative 'addresse'
+require_relative 'ficheprocess'
 
 class Role < Sequel::Model
   one_to_many :agent
 end
 class Statut < Sequel::Model
   one_to_many :fiche
-  # @@states = ['Traitement', ['Acceptée', 'Rejetée'], 'Exécutée']
+  @@states = ['Traitement', ['Approuvée', 'Rejetée'], 'Exécutée']
 
-  # def self.nextState(statut = nil, rejectionflag = false)
-  #   if statut.nil?
-  #     return @@states.first
-  #   end
+  def self.nextState(statut = nil, rejectionflag = false)
+    if statut.nil?
+      return self.where(:nom => @@states.first).first
+    end
 
-  #   if statut == @@states.first
-  #     if rejectionflag
-  #       return @@states.value_at(@@states.first).last
-  #     else
-  #      return @@states.value_at(@@states.first).first
-  #     end
-  #   end
+    if statut == @@states.first
+      if rejectionflag
+        return self.where(:nom => @@states[1].last).first
+      else
+        puts @@states[1].first
+        return self.where(:nom => @@states[1].first).first
+      end
+    end
 
-  #   if statut == @@states.value_at(@@states.first).first
-  #     return @@states.last
-  #   else
-  #     return nil
-  #   end
-  # end
+    if statut == @@states[1].first
+      return self.where(:nom => @@states.last).first
+    else
+      return nil
+    end
+  end
 end

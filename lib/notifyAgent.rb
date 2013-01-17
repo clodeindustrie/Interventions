@@ -100,7 +100,7 @@ class NotifyAgent < Sinatra::Application
 
   def self.notify(details)
     Pony.mail ({
-                 :subject   => "Une Intervention requière votre attention",
+                 :subject   => "Une Intervention requière votre attention"
                }.merge!(details))
   end
 
