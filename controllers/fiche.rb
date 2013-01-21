@@ -22,7 +22,7 @@ class Intervention < Sinatra::Application
 
     if @fiche.errors.empty?
       flash[:message] = "La demande d'intervention a été envoyée au responsable pour traitment"
-      NotifyAgent.notifyAbout(@fiche)
+      NotifyAgent.notifyAbout(@fiche, settings.current_base_url)
       redirect '/'
     else
       @errors = @fiche.errors
@@ -57,7 +57,7 @@ class Intervention < Sinatra::Application
     @fiche = FicheProcess.setFiche(@fiche, params)
 
     if @fiche.errors.empty?
-      NotifyAgent.notifyAbout(@fiche)
+      NotifyAgent.notifyAbout(@fiche, settings.current_base_url)
       flash[:message] = "La demande d'intervention a été envoyée"
       redirect '/'
     else
@@ -91,7 +91,7 @@ class Intervention < Sinatra::Application
     @fiche = FicheProcess.setFiche(@fiche, params)
 
     if @fiche.errors.empty?
-      NotifyAgent.notifyAbout(@fiche)
+      NotifyAgent.notifyAbout(@fiche, settings.current_base_url)
 
       flash[:message] = "La demande d'intervention a été cloturée"
       redirect '/'

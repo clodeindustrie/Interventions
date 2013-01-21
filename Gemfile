@@ -7,6 +7,10 @@ gem 'sequel', '3.36.0'
 gem 'json'
 gem 'pony'
 gem 'rack-flash3'
-gem 'rspec'
 gem 'sinatra-contrib'
-gem 'mailcatcher'
+gem 'mina'
+
+group :development do
+  gem 'rspec'
+  gem 'mailcatcher'
+end

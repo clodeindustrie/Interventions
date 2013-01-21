@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 require 'tilt'
 
-class NotifyAgent < Sinatra::Application
+class NotifyAgent
 
-  # shitty hack
-  @@current_base_url = "http://0.0.0.0:5000"
+  @@current_base_url = ""
 
-  def self.notifyAbout(fiche)
+  def self.notifyAbout(fiche, base_url)
+    @@current_base_url = base_url
     case fiche.statut.nom
     when 'Traitement'
       self.notifyTraitement(fiche)
@@ -18,6 +18,8 @@ class NotifyAgent < Sinatra::Application
       self.notifyExécutée(fiche)
     end
   end
+
+  private
 
   def self.render_template(template, locals)
     rendered = Tilt.new(File.join(settings.views, "emails", "#{template}.erb")).render(self, locals)
