@@ -123,3 +123,13 @@ p.freeText {
     border: 1px solid black;
     font-weight: bold;
 }
+
+
+/* ------- LOGIN PAGE -------  */
+#login-well {
+    text-align: center;
+}
+
+#login-well form{
+    margin: 0;
+}
