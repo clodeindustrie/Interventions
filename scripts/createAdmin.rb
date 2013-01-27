@@ -1,14 +1,29 @@
 # -*- coding: utf-8 -*-
-require 'app'
+require_relative '../app'
 
-if Agent[1].nil? || Agent[1].nom != 'admin'
-  toto = {:role_id => 1, :nom => 'admin', :email => 'admin@toto.com', :password => 'toto', :password_confirmation => 'toto'}
+if ARGV.size < 2
+  puts "Tapez l'addresse email de l'admin"
+  email = gets
+  puts "Tapez un mot de passe:"
+  password = gets
+else
+  email = ARGV[0]
+  password = ARGV[1]
+end
+if Agent.where(:nom => 'Admin').all.empty?
+  toto = {
+    :role_id               => 1,
+    :nom                   => 'Admin',
+    :email                 => email,
+    :password              => password,
+    :password_confirmation => password
+  }
   admin = Agent.new toto
   if admin.save
-    puts "Admin creé avec succes!\n"
+    puts "Admin créé avec succes !\n"
   else
-    puts "problem YO"
+    puts "problem YO: " + admin.errors.inspect
   end
-  else
+else
   puts "Admin existe déja"
 end

@@ -58,7 +58,6 @@ class Statut < Sequel::Model
       if rejectionflag
         return self.where(:nom => @@states[1].last).first
       else
-        puts @@states[1].first
         return self.where(:nom => @@states[1].first).first
       end
     end
