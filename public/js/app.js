@@ -19,8 +19,9 @@ $(function () {
 
     //initiate datepicker on the fiche form
     if ($('#done_at').length !== 0) {
-        $("#done_at").datepicker({
-            dateFormat: 'dd/mm/yy'
+        $("#datepicker").datepicker({
+            autoclose: true,
+            language: 'fr-FR'
         });
     }
 
@@ -31,7 +32,9 @@ $(function () {
             .attr("id", "modal-action")
             .text(actionlink.title)
             .click(function (e) {
-                actionlink.click();
+                if (actionlink.click !== undefined) {
+                    actionlink.click();
+                }
             });
     };
 

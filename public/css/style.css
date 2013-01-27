@@ -76,14 +76,50 @@
     font-weight: bold;
 }
 
-#ficheDetails div.textblock {
-    border: none;
-}
-
 .mainspan {
     padding-bottom: 20px;
 }
 
 #email {
-    width: 17.9em !important;
+    width: 81%;
+}
+
+#role {
+    width: 81%;
+}
+
+#formDetails {
+    line-height: 2.3em;
+}
+
+#formDetails #statut {
+    float: right;
+    margin-top: 7px;
+    padding: 4px 4px;
+}
+
+#formDetails span {
+    font-size: 1.2em;
+    font-weight: 200;
+}
+
+#formDetails div{
+    padding-bottom: 3px;
+    border-bottom: 1px solid #000000;
+    margin-bottom: 7px;
+}
+
+#formDetails div p{
+    color: #000000;
+    font-weight: bold;
+}
+
+div.textblock {
+    border: none;
+}
+
+p.freeText {
+    padding: 3px;
+    border: 1px solid black;
+    font-weight: bold;
 }

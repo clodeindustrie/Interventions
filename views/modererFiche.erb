@@ -5,18 +5,22 @@
 </div>
 <div class="span5 well">
   <legend>Demande d'intervention</legend>
-  <% if !@fiche.nil? && !@fiche.statut.nil?  %>
-  Statut: <span class="label label-<%=cssStatus(@fiche.statut.nom)%>"><%=@fiche.statut.nom %></span>
-    <% if @fiche.statut.nom == "Rejetée"%>
-	Raison de la rejection:
-	<p><%=@fiche.observations %></p>
+  <div id="formDetails">
+    <% if !@fiche.nil? && !@fiche.statut.nil?  %>
+    <span>Statut</span> <span id="statut" class="label label-<%=cssStatus(@fiche.statut.nom)%>"><%=@fiche.statut.nom %></span>
+        <% if @fiche.statut.nom == "Rejetée"%>
+            Raison de la rejection:
+        <p><%=@fiche.observations %></p>
+        <% end %>
     <% end %>
-    <br></br>
-  <% end %>
-  <p>Intitulé: <%=h @fiche.sujet %></p>
-  <p>Famille: <%=h @fiche.famille %></p>
-  <p>Addresse: <%=h @fiche.addresse.addresse %></p>
-  <p>Nature de l'intervention: <%=h @fiche.contenue %></p>
+    <div>  <span>Intitulé</span><p class="pull-right"> <%=h @fiche.sujet %></p></div>
+    <div>  <span>Famille </span><p class="pull-right"><%=h @fiche.famille %></p></div>
+    <div>  <span>Addresse</span><p class="pull-right"><%=h @fiche.addresse.addresse %></p></div>
+    <div class="textBlock">
+      <span>Nature de l'intervention</span>
+      <p class="freeText"><%=h @fiche.contenue %></p>
+    </div>
+  </div>
   <form accept-charset="UTF-8" action="<%=@nextAction%>" method="post">
     <div class="control-group">
       <label class="control-label" for="priority">Priorité</label>

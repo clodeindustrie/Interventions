@@ -21,7 +21,7 @@ class Intervention < Sinatra::Application
     @fiche = FicheProcess.setFiche(@fiche, params)
 
     if @fiche.errors.empty?
-      flash[:message] = "La demande d'intervention a été envoyée au responsable pour traitment"
+      flash[:message] = "La demande d'intervention a été envoyée au responsable pour traitement"
       NotifyAgent.notifyAbout(@fiche, settings.current_base_url)
       redirect '/'
     else

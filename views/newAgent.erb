@@ -18,11 +18,16 @@
       </div>
     </div>
     <div class="control-group">
-      Rôle: <select name="agent[role_id]" id="role">
-	<% @roles.each do |r| %>
-	    <option value="<%=r.id %>" <%="selected" if !@agent.nil? && @agent.role_id == r.id %>><%=r[:nom] %></option>
-	<% end %>
-      </select>
+      <div class="input-prepend">
+        <span class="add-on">
+          <i>Rôle</i>
+        </span>
+        <select name="agent[role_id]" id="role">
+	  <% @roles.each do |r| %>
+	  <option value="<%=r.id %>" <%="selected" if !@agent.nil? && @agent.role_id == r.id %>><%=r[:nom] %></option>
+	  <% end %>
+        </select>
+      </div>
     </div>
     <div class="control-group">
       <input class="span3" id="password" name="agent[password]" placeholder="Mot de passe" type="password">
