@@ -1,7 +1,7 @@
 --  -*- coding: utf-8 -*-
-CREATE DATABASE `dev_ficheTechnique`;
+-- CREATE DATABASE `dev_ficheTechnique`;
 
-use dev_ficheTechnique;
+-- use dev_ficheTechnique;
 
 CREATE TABLE `roles` (
        `id`    SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,

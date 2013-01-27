@@ -61,10 +61,19 @@ class Intervention < Sinatra::Application
   configure :production do
     Pony.options = {
       :via => :smtp,
+      :via_options => {
+        :address => 'smtp.sendgrid.net',
+        :port => '587',
+        :domain => 'heroku.com',
+        :user_name => ENV['SENDGRID_USERNAME'],
+        :password => ENV['SENDGRID_PASSWORD'],
+        :authentication => :plain,
+        :enable_starttls_auto => true
+      },
       :from      => "intervention@selogerpourvivre.org",
       :charset   => "UTF-8"
     }
-    set :current_base_url, "http://0.0.0.0:5000"
+    set :current_base_url, "http://interventions.herokuapp.com"
     set :clean_trace, true
   end
 

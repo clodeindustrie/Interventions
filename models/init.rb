@@ -23,14 +23,7 @@ elsif settings.environment == :test
     :encoding => 'utf8'
   }
 elsif settings.environment == :production
-  mysql_details = {
-    :adapter  => 'mysql',
-    :host     => 'localhost',
-    :user     => 'root',
-    :password => 'taeslin',
-    :database => 'dev_ficheTechnique',
-    :encoding => 'utf8'
-  }
+  mysql_details = env['DATABASE_URL']
 end
 
 
