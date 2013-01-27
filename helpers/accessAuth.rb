@@ -2,7 +2,7 @@
 module AccessAuth
   def already_processed?
     if !@fiche.to_be_processed_by? current_user
-      halt 404
+      redirect "/#" + @fiche.id.to_s
     end
   end
 

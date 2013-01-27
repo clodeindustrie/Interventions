@@ -22,13 +22,13 @@ elsif settings.environment == :test
     :database => 'test_ficheTechnique',
     :encoding => 'utf8'
   }
-elsif settings.environment == :live
+elsif settings.environment == :production
   mysql_details = {
     :adapter  => 'mysql',
     :host     => 'localhost',
     :user     => 'root',
     :password => 'taeslin',
-    :database => 'live_ficheTechnique',
+    :database => 'dev_ficheTechnique',
     :encoding => 'utf8'
   }
 end

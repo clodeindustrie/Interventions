@@ -53,19 +53,37 @@ class Intervention < Sinatra::Application
       :charset   => "UTF-8"
     }
     set :current_base_url, "http://0.0.0.0:5000"
-    set :raise_errors, true
     set :logging, true
+    set :dump_errors, true
+    set :show_exceptions, :after_handler
   end
 
   configure :production do
     Pony.options = {
       :via => :smtp,
-      :via_options => { :host => '127.0.0.1', :port => '1025' },
       :from      => "intervention@selogerpourvivre.org",
       :charset   => "UTF-8"
     }
     set :current_base_url, "http://0.0.0.0:5000"
     set :clean_trace, true
+  end
+
+  not_found do
+    erb :not_found, :layout => false
+  end
+
+  error do
+    Pony.mail({
+                :to      => 'clodeindustrie@gmail.com',
+                :from    => 'error@selogerpourvivre.org',
+                :subject => 'Error in Intervention',
+                :body    => env['sinatra.error'].message
+              })
+    erb :error_pascool, :layout => false
+  end
+
+  error 501 do
+    erb :pascool, :layout => false
   end
 
   get '/' do
