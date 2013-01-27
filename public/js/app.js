@@ -78,9 +78,9 @@ $(function () {
 (function ($arr) {
     $arr.init = function (errors) {
         if (errors !== {}) {
-            $(':input').each(function (i, e) {
+            $(':input, .input-prepend').each(function (i, e) {
                 if (errors[e.id] !== undefined) {
-                    $("<span class='help-inline'>" + errors[e.id][0] + "</span>").insertBefore($(e));
+                    $("<span class='help-inline'>" + errors[e.id][0] + "</span>").insertAfter($(e));
                     $(e).parent().addClass('error');
                 }
             });

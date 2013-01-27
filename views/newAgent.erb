@@ -10,11 +10,11 @@
       <input class="span3" id="nom" name="agent[nom]" placeholder="Nom" type="text" value="<%=h @agent.nom unless @agent.nil? %>">
     </div>
     <div class="control-group">
-      <div class="input-prepend">
+      <div class="input-prepend" id="email">
         <span class="add-on">
           <i class="icon-envelope"></i>
         </span>
-        <input type="email" id="email" name="agent[email]" placeholder="Ex: roger@yahoo.com" value="<%=h @agent.email unless @agent.nil?%>">
+        <input type="email" name="agent[email]" placeholder="Ex: roger@yahoo.com" value="<%=h @agent.email unless @agent.nil?%>">
       </div>
     </div>
     <div class="control-group">
