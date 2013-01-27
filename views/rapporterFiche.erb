@@ -39,9 +39,7 @@
 
     <div class="control-group">
       <label class="control-label" for="travaux">Nature de l'intervention réalisée</label>
-      <textarea class="span4" id="travaux" name="fiche[travaux]" rows="5">
-	<%=h @fiche.travaux unless @fiche.nil? %>
-      </textarea>
+      <textarea class="span4" id="travaux" name="fiche[travaux]" rows="5"><%=h @fiche.travaux unless @fiche.nil? %></textarea>
     </div>
     <%= newFicheButton current_user.role.nom %>
   </form>
