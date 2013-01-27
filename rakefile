@@ -3,3 +3,13 @@ require './app'
 task :migrate do
   DataMapper.auto_migrate!
 end
+
+task :create_admin, [:email, :pass] do |t, args|
+   sh "ruby ./scripts/createAdmin.rb #{args.email} #{args.pass}"
+end
+
+task :create_db do
+  file = File.open("./scripts/schema.sql", "rb")
+  DB.run(file.read)
+  file.close
+end

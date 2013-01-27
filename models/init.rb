@@ -23,19 +23,12 @@ elsif settings.environment == :test
     :encoding => 'utf8'
   }
 elsif settings.environment == :production
-  mysql_details = {
-    :adapter  => 'mysql',
-    :host     => 'localhost',
-    :user     => 'root',
-    :password => 'taeslin',
-    :database => 'dev_ficheTechnique',
-    :encoding => 'utf8'
-  }
+  mysql_details = ENV['DATABASE_URL']
 end
 
 
 DB = Sequel.connect(mysql_details)
-DB.convert_invalid_date_time = :string
+# DB.convert_invalid_date_time = :string
 
 require_relative 'fiche'
 require_relative 'agent'
