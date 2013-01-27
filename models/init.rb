@@ -23,7 +23,7 @@ elsif settings.environment == :test
     :encoding => 'utf8'
   }
 elsif settings.environment == :production
-  mysql_details = env['DATABASE_URL']
+  mysql_details = ENV['DATABASE_URL']
 end
 
 
