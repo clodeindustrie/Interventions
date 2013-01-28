@@ -28,7 +28,7 @@ end
 
 
 DB = Sequel.connect(mysql_details)
-DB.convert_invalid_date_time = :string
+# DB.convert_invalid_date_time = :string
 
 require_relative 'fiche'
 require_relative 'agent'
