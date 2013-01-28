@@ -8,6 +8,7 @@ gem 'json'
 gem 'pony'
 gem 'rack-flash3'
 gem 'sinatra-contrib'
+gem 'pg'
 gem 'mina'
 
 group :development do
