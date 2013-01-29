@@ -8,7 +8,7 @@ Sequel.migration do
       String :hashed_password, :null => false, :size => 255
       String :salt, :null => false, :size => 255
       DateTime :created_at, :null => false, :default => Time.now
-      index(:email)
+      index :email, :unique => true
     end
   end
 
