@@ -1,3 +1,4 @@
+# encoding: utf-8
 require './app'
 
 task :migrate do
@@ -12,4 +13,19 @@ task :create_db do
   file = File.open("./scripts/schema.sql", "rb")
   DB.run(file.read)
   file.close
+end
+
+task :seed_roles do
+  Role.create(:nom => 'Admin')
+  Role.create(:nom => 'Responsable')
+  Role.create(:nom => 'Agent')
+  Role.create(:nom => 'Technicien')
+end
+
+
+task :seed_statuts do
+  Statut.create(:nom => 'Traitement')
+  Statut.create(:nom => 'Approuvée')
+  Statut.create(:nom => 'Rejetée')
+  Statut.create(:nom => 'Exécutée')
 end

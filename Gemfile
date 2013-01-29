@@ -12,6 +12,7 @@ gem 'pg'
 gem 'mina'
 
 group :development do
+  gem 'pry'
   gem 'rspec'
   gem 'mailcatcher'
 end
