@@ -14,7 +14,6 @@ Sequel.migration do
       DateTime :created_at, :null => false, :default => Time.now
       DateTime :done_at
       String :priority, :null => false, :default => 'U'
-      index :email, :unique => true
     end
   end
 
