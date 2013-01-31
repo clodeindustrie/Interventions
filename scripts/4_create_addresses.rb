@@ -7,6 +7,6 @@ Sequel.migration do
   end
 
   down do
-    drop_table(:agents)
+    drop_table(:addresses)
   end
 end

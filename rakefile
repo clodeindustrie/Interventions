@@ -17,8 +17,8 @@ task :reset_migrate_and_seed do
   Sequel.extension :migration
   Sequel::Migrator.run Sequel::Model.db, "scripts", :target => 0
   Sequel::Migrator.run Sequel::Model.db, "scripts"
-  Rake::Task[:seed_roles].clear
-  Rake::Task[:seed_statuts].clear
+  Rake::Task[:seed_roles].execute
+  Rake::Task[:seed_statuts].execute
   puts "All good !"
 end
 
@@ -26,8 +26,8 @@ desc "Migrate and seed the DB"
 task :migrate_and_seed do
   Sequel.extension :migration
   Sequel::Migrator.run Sequel::Model.db, "scripts"
-  Rake::Task[:seed_roles].clear
-  Rake::Task[:seed_statuts].clear
+  Rake::Task[:seed_roles].execute
+  Rake::Task[:seed_statuts].execute
   puts "All good !"
 end
 
@@ -43,6 +43,7 @@ end
 
 desc "seed the statuts table"
 task :seed_statuts do
+  Statut.forced_encoding = 'UTF-8'
   Statut.create(:nom => 'Traitement')
   Statut.create(:nom => 'Approuvée')
   Statut.create(:nom => 'Rejetée')
