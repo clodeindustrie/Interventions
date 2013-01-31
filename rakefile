@@ -1,31 +1,51 @@
 # encoding: utf-8
 require './app'
+task :default => [:tasks]
 
-task :migrate do
-  DataMapper.auto_migrate!
+task :tasks do
+  sh 'rake -T'
 end
 
+desc "Create the admin user in the db"
 task :create_admin, [:email, :pass] do |t, args|
    sh "ruby ./scripts/createAdmin.rb #{args.email} #{args.pass}"
+  puts "All good !"
 end
 
-task :create_db do
-  file = File.open("./scripts/schema.sql", "rb")
-  DB.run(file.read)
-  file.close
+desc "Reset, migrate and seed the DB from scratch"
+task :reset_migrate_and_seed do
+  Sequel.extension :migration
+  Sequel::Migrator.run Sequel::Model.db, "scripts", :target => 0
+  Sequel::Migrator.run Sequel::Model.db, "scripts"
+  Rake::Task[:seed_roles].clear
+  Rake::Task[:seed_statuts].clear
+  puts "All good !"
 end
 
+desc "Migrate and seed the DB"
+task :migrate_and_seed do
+  Sequel.extension :migration
+  Sequel::Migrator.run Sequel::Model.db, "scripts"
+  Rake::Task[:seed_roles].clear
+  Rake::Task[:seed_statuts].clear
+  puts "All good !"
+end
+
+desc "Seed the roles table"
 task :seed_roles do
   Role.create(:nom => 'Admin')
   Role.create(:nom => 'Responsable')
   Role.create(:nom => 'Agent')
   Role.create(:nom => 'Technicien')
+  puts "Roles Seeded"
 end
 
 
+desc "seed the statuts table"
 task :seed_statuts do
   Statut.create(:nom => 'Traitement')
   Statut.create(:nom => 'Approuvée')
   Statut.create(:nom => 'Rejetée')
   Statut.create(:nom => 'Exécutée')
+  puts "Statuts seeded"
 end
