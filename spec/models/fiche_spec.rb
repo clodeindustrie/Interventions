@@ -9,7 +9,12 @@ describe Fiche do
     f.statut = Statut.where(:nom => "Approuvée").first
     f.valid?.should be_false
 
-    f.technicien = Agent.create(:email => "test@test.fr", :nom => "testNom", :password => "test", :password_confirmation => "test")
+    f.technicien = Agent.create(
+                                :email                 => "test@test.fr",
+                                :nom                   => "testNom",
+                                :password              => "test",
+                                :password_confirmation => "test"
+                                )
     f.valid?.should be_true
 
     f.statut = Statut.where(:nom => "Exécutée").first
@@ -20,6 +25,11 @@ describe Fiche do
   end
 
   it "returns a date or nil when calling finie_le" do
+    f = Fiche.new({:done_at => Date.new(2010,10,12)})
+    f.finie_le.should eq("12/10/2010")
+
+    f.done_at = ""
+    f.finie_le.should be_nil
   end
 
   it "should send an email to the responsable when it's created'" do
