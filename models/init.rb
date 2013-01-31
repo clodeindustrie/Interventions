@@ -2,15 +2,13 @@
 require 'mysql2'
 require 'sequel'
 
-Sequel::Model.plugin :force_encoding, 'UTF-8'
-
 if settings.environment == :development
   mysql_details = {
     :adapter  => 'mysql',
     :host     => 'localhost',
     :user     => 'root',
     :password => 'taeslin',
-    :database => 'dev_ficheTechnique',
+    :database => 'dev_interventions',
     :encoding => 'utf8'
   }
 elsif settings.environment == :test
@@ -19,7 +17,7 @@ elsif settings.environment == :test
     :host     => 'localhost',
     :user     => 'root',
     :password => 'taeslin',
-    :database => 'test_ficheTechnique',
+    :database => 'test_interventions',
     :encoding => 'utf8'
   }
 elsif settings.environment == :production
@@ -29,6 +27,7 @@ end
 
 DB = Sequel.connect(mysql_details)
 # DB.convert_invalid_date_time = :string
+Sequel::Model.plugin :force_encoding, 'UTF-8'
 
 require_relative 'fiche'
 require_relative 'agent'
