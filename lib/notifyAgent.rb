@@ -48,8 +48,8 @@ class NotifyAgent
     }
     self.notify( {
                    :to        => locals[:to].email,
-                   :html_body => self.render_template("acceptée_tech_html", locals),
-                   :body      => self.render_template("acceptée_tech_text", locals),
+                   :html_body => self.render_template("acceptee_tech_html", locals),
+                   :body      => self.render_template("acceptee_tech_text", locals),
                  })
 
     locals = {
@@ -59,8 +59,8 @@ class NotifyAgent
     }
     self.notify( {
                    :to        => locals[:to].email,
-                   :html_body => self.render_template("acceptée_dem_html", locals),
-                   :body      => self.render_template("acceptée_dem_text", locals),
+                   :html_body => self.render_template("acceptee_dem_html", locals),
+                   :body      => self.render_template("acceptee_dem_text", locals),
                  })
   end
 
@@ -72,8 +72,8 @@ class NotifyAgent
     }
     self.notify( {
                    :to        => locals[:to].email,
-                   :html_body => self.render_template("rejetée_html", locals),
-                   :body      => self.render_template("rejetée_text", locals),
+                   :html_body => self.render_template("rejetee_html", locals),
+                   :body      => self.render_template("rejetee_text", locals),
                  })
   end
 
@@ -85,8 +85,8 @@ class NotifyAgent
     }
     self.notify( {
                    :to        => locals[:to].email,
-                   :html_body => self.render_template("exécutée_dem_html", locals),
-                   :body      => self.render_template("exécutée_dem_text", locals),
+                   :html_body => self.render_template("executee_dem_html", locals),
+                   :body      => self.render_template("executee_dem_text", locals),
                  })
     locals = {
       :fiche    => fiche,
@@ -95,8 +95,8 @@ class NotifyAgent
     }
     self.notify( {
                    :to        => locals[:to].email,
-                   :html_body => self.render_template("exécutée_resp_html", locals),
-                   :body      => self.render_template("exécutée_resp_text", locals),
+                   :html_body => self.render_template("executee_resp_html", locals),
+                   :body      => self.render_template("executee_resp_text", locals),
                  })
   end
 

@@ -3,9 +3,9 @@ require_relative '../app'
 
 if ARGV.size < 2
   puts "Tapez l'addresse email de l'admin"
-  email = gets
+  email = gets.chomp
   puts "Tapez un mot de passe:"
-  password = gets
+  password = gets.chomp
 else
   email = ARGV[0]
   password = ARGV[1]

@@ -4,7 +4,7 @@ require 'sequel'
 
 if settings.environment == :development
   mysql_details = {
-    :adapter  => 'mysql',
+    :adapter  => 'mysql2',
     :host     => 'localhost',
     :user     => 'root',
     :password => 'taeslin',
@@ -13,7 +13,7 @@ if settings.environment == :development
   }
 elsif settings.environment == :test
   mysql_details = {
-    :adapter  => 'mysql',
+    :adapter  => 'mysql2',
     :host     => 'localhost',
     :user     => 'root',
     :password => 'taeslin',
