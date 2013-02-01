@@ -21,10 +21,12 @@
       <p class="freeText"><%=h @fiche.contenue %></p>
     </div>
     <div><span>Prioritée</span><p class="pull-right"><%=@fiche.getPriority%></p></div>
+    <% if !@fiche.observations.blank? %>
     <div class="textBlock">
       <span>Observations du responsable</span>
       <p class="freeText"><%=h @fiche.observations %></p>
     </div>
+    <% end %>
   </div>
   <form accept-charset="UTF-8" action="<%=@nextAction%>" method="post">
     <div class="control-group">
